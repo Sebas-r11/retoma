@@ -14,3 +14,4 @@ print ("el resultado de la multiplicacion es", f)
 print ("el resultado de la potencia es", g)
 print ("el resultado de la division entera", h) #division sin decimal
 print ("el resultado del modulo ", i) #por ejemplo si son personas no divides una esta sobra
+#lalallala
