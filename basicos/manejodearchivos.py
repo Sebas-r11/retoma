@@ -1,0 +1,10 @@
+archivo = open("archivo.txt", "w")
+archivo.write("Hola mundo. \n")
+archivo.write("Hola mundo 2.")
+archivo.close()
+
+archivo = open("archivo.txt", "r")
+contenido = archivo.read()
+print ("contenido del archivo: ")
+print (contenido)
+archivo.close()
