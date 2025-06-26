@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'panda',
     'rest_framework',
-    
+    'polar',
+    'pardo',
 ]
 
 MIDDLEWARE = [
