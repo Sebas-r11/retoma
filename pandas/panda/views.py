@@ -11,3 +11,5 @@ class produccion_Details(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = est_produccion_Serializer
 
 
+
+

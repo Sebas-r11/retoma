@@ -1,0 +1,100 @@
+import os
+import sys
+import django
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Obtener la ruta real del proyecto - debe ser la carpeta 'pandas'
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+print(f"Project root corregido: {PROJECT_ROOT}")
+
+# 2. Agregar al PYTHONPATH
+sys.path.insert(0, PROJECT_ROOT)
+print(f"Python path actualizado: {sys.path}")
+
+# 3. Configurar Django con el módulo correcto
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings") 
+
+try:
+    django.setup()
+    print("✅ Django configurado correctamente!")
+except Exception as e:
+    print(f"❌ Error configurando Django: {e}")
+    sys.exit(1)
+
+# 4. Importar tus componentes
+try:
+    from panda.models import produccion
+    from panda.serializers import est_produccion_Serializer
+    print("✅ Modelos y serializadores importados correctamente!")
+except ImportError as e:
+    print(f"❌ Error importando componentes: {e}")
+    sys.exit(1)
+
+# 5. Obtener y mostrar datos
+try:
+    queryset = produccion.objects.all()
+    print(f"✅ Encontrados {queryset.count()} registros de producción")
+    
+    serializer = est_produccion_Serializer(queryset, many=True)
+    df = pd.DataFrame(serializer.data)
+    
+    print("\n" + "="*50)
+    print("Primeras 5 filas de producción:")
+    print(df.head())
+
+
+    #df.head()	Primeras filas (5 por defecto)	df.head(3)
+    #df.tail()	Últimas filas (5 por defecto)	df.tail(2)
+    #df.sample()	Muestra filas aleatorias	df.sample(5)
+    #df.iloc[]	Acceso por posición	df.iloc[0:3]
+
+    
+    # 6. Guardar en CSV para verificar
+    csv_path = os.path.join(PROJECT_ROOT, 'produccion_data.csv')
+    df.to_csv(csv_path, index=False)
+    print(f"\n💾 Datos guardados en: {csv_path}")
+    
+except Exception as e:
+    print(f"❌ Error procesando datos: {e}")
+    sys.exit(1)
+
+    # Crear un DataFrame de ejemplo
+    #data = {
+        #'id': range(1, 101),
+        #'nombre': [f'Persona {i}' for i in range(1, 101)],
+        #'edad': [20 + i % 30 for i in range(100)]
+    #}
+    #df = pd.DataFrame(data)
+try:
+    # 5. Gráfico simple de producción por sección
+    plt.figure(figsize=(10, 6))
+
+    # Agrupar producción por sección
+    produccion_por_seccion = df.groupby('seccion')['cantidad'].sum()
+
+    # Crear gráfico de barras
+    produccion_por_seccion.plot(kind='bar', color='skyblue')
+
+    # Personalizar gráfico
+    plt.title('Producción Total por Sección', fontsize=14)
+    plt.xlabel('Sección', fontsize=12)
+    plt.ylabel('Produccion', fontsize=12)
+    plt.xticks(rotation=45)
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+    # Ajustar layout y guardar
+    plt.tight_layout()
+    plt.savefig(os.path.join(PROJECT_ROOT, 'produccion_por_seccion.png'))
+    print("✅ Gráfico guardado como 'produccion_por_seccion.png'")
+
+    # Mostrar estadísticas básicas
+    print("\n" + "="*50)
+    print("Resumen de producción por sección:")
+    print("="*50)
+    print(produccion_por_seccion)
+
+except Exception as e:
+    print(f"❌ Error procesando datos para graficar: {e}")
+    sys.exit(1)
+
