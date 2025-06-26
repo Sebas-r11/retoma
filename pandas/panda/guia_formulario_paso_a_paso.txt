@@ -1,0 +1,43 @@
+Guía paso a paso: Formulario de ingreso de producción en Django
+===============================================================
+
+1. Se creó una vista basada en clase usando CreateView (en views.py):
+   - `ProduccionCreateView` hereda de `CreateView` de Django.
+   - Esta vista permite mostrar un formulario HTML para crear un nuevo objeto del modelo `produccion`.
+   - Se especifican los campos a mostrar: `seccion` y `produccion`.
+   - Se indica el template HTML a usar: 'panda/formulario.html'.
+   - Se define la URL a la que redirige tras guardar: '/sup/'.
+
+2. Se agregó la ruta en urls.py:
+   - Se importa la vista `ProduccionCreateView`.
+   - Se define la ruta 'nuevo/' que apunta a esta vista, con el nombre 'produccion_form'.
+   - Otras rutas permiten listar, crear, ver, actualizar y eliminar producciones vía API (JSON).
+
+3. Se creó el template base.html:
+   - Define la estructura y estilos generales para los formularios y páginas de la app.
+   - Usa bloques para que otros templates puedan insertar su contenido.
+
+4. Se creó el template formulario.html:
+   - Extiende de base.html para heredar el diseño.
+   - Muestra un formulario generado automáticamente por Django.
+   - Usa `{{ form.as_p }}` para mostrar los campos del formulario.
+   - Incluye el token CSRF obligatorio para seguridad.
+
+5. Comentarios en el código:
+   - Cada archivo y línea relevante tiene comentarios explicativos para principiantes.
+   - Se explica la función de cada importación, clase, método y bloque de template.
+
+Resumen de la función de cada línea clave:
+------------------------------------------
+- `from django.views.generic.edit import CreateView`: Importa la clase para crear formularios HTML automáticos.
+- `class ProduccionCreateView(CreateView)`: Define la vista para crear producciones desde un formulario.
+- `model = produccion`: Indica el modelo a usar.
+- `fields = [...]`: Especifica los campos del formulario.
+- `template_name = ...`: Indica el template HTML a usar.
+- `success_url = ...`: URL de redirección tras guardar.
+- `path('nuevo/', ProduccionCreateView.as_view(), ...)`: Ruta para mostrar el formulario HTML.
+- `{% extends 'base.html' %}`: El template hereda el diseño base.
+- `{% csrf_token %}`: Token de seguridad para formularios POST.
+- `{{ form.as_p }}`: Muestra los campos del formulario como párrafos.
+
+Con esto puedes crear, mostrar y procesar formularios HTML en Django de forma sencilla y reutilizando el modelo existente. Si tienes dudas sobre algún paso, revisa los comentarios en el código fuente.

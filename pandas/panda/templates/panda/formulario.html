@@ -1,0 +1,18 @@
+<!-- File: formulario.html -->
+<!--Este template extiende de base.html para usar un diseño común.
+Muestra un formulario para ingresar una nueva producción.
+El formulario es generado automáticamente por la vista CreateView.-->
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Ingresar Producción</h2>
+    <form method="post"> <!-- post no es una importacion es un atributo html -->
+        {# Token de seguridad obligatorio en formularios POST de Django #}
+        {% csrf_token %}
+        {# El formulario se genera automáticamente con los campos definidos en la vista #}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+{% endblock %}

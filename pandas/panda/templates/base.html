@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}App Panda{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 60px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ccc; padding: 40px; }
+        h2 { color: #1976d2; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #333; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .btn { background: #1976d2; color: #fff; border: none; padding: 12px 20px; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        .btn:hover { background: #1565c0; }
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

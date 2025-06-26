@@ -6,6 +6,8 @@ class est_produccion_Serializer(serializers.ModelSerializer):
     
     class Meta: 
         model = produccion
+        template_name = 'pamda/lista.html'
+        context_object_name = 'object_list'
         fields = '__all__'
         
     # class Meta:
